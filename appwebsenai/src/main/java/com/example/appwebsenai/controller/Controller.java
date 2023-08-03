@@ -46,16 +46,10 @@ public class Controller {
         person.setSexo(sexo);
         personRepository.save(person);
         return person;
-<<<<<<< HEAD
-=======
-    }
-
-    public List<Person> listAll(){
-        return (List<Person>)personRepository.findAll();
->>>>>>> 0df9cca3bfd9c5b2ff6a2401c635071b03efd00e
     }
 
     public List<Person> listAll(){
         return (List<Person>)personRepository.findAll();
     }
+
 }
