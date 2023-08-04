@@ -17,6 +17,29 @@ public class ContaCorrentePF{
     @OneToOne
     private Person person;
 
+    @Column(name = "Type")
+    private AccountType AccountType;
+
+    @Transient
+    private String error;
+
+
+    public com.example.appwebsenai.model.AccountType getAccountType() {
+        return AccountType;
+    }
+
+    public void setAccountType(com.example.appwebsenai.model.AccountType accountType) {
+        AccountType = accountType;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
     public Person getPerson() {
         return person;
     }

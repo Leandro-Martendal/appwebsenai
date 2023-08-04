@@ -1,16 +1,17 @@
 package com.example.appwebsenai.controller;
 
-import com.example.appwebsenai.model.Conta;
 import com.example.appwebsenai.model.ContaCorrentePF;
 
 public interface ContaCorrente {
 
-    Double sacar(Double quantidade, Conta conta);
+    Double sacar(Double quantidade, String name);
 
-    //void depositar(Double quantidade, Conta conta);
+    String depositar(Double quantidade, String name);
 
-    void transferir(Double quantidade, Conta conta);
+    String transferir(Double quantidade, Long contaOrigem, Long contaDestino);
 
     Double consultaSaldo(ContaCorrentePF conta);
+
+    Double extrato(Long contaOrigem);
 
 }
