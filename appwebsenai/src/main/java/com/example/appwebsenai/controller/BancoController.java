@@ -25,20 +25,22 @@ public class BancoController implements ContaCorrente{
         return null;
     }
 
-    public ContaCorrentePF criarConta(String name, String accountType) throws Exception {
+    public ContaCorrentePF criarConta(String name, String type) throws Exception {
         message.setLength(0);
         ContaCorrentePF contaCorrentePF = new ContaCorrentePF();
-        if(accountType == null){
+        if(type == null){
             message.append("\nNecessário informar o tipo da conta!");
         }
-        switch (accountType){
+        switch (type){
             case "POUPANCA" :
                 contaCorrentePF.setAccountType(AccountType.CONTA_POUPANCA);
                 break;
             case "CORRENTE" :
                 contaCorrentePF.setAccountType(AccountType.CONTA_CORRENTE);
+                break;
             default:
                 message.append("\nTipo da conta não é suportado!");
+                break;
         }
 
         Person person = controller.findPerson(name);
@@ -92,6 +94,7 @@ public class BancoController implements ContaCorrente{
     @Override
     public String transferir(Double quantidade, Long contaOrigem, Long contaDestino) {
         message.setLength(0);
+        Double Tax = 10.0D;
         ContaCorrentePF n3 = bancoRepository.findById(contaOrigem).get();
         ContaCorrentePF n4 = bancoRepository.findById(contaDestino).get();
 
@@ -99,7 +102,13 @@ public class BancoController implements ContaCorrente{
             if (n3.getSaldo() >= quantidade) {
                 Double totalOrigem = n3.getSaldo() - quantidade;
                 Double totalDestino = (n4.getSaldo() != null ? n4.getSaldo() : 0.0) + quantidade;
-                n3.setSaldo(totalOrigem);
+                if(n3.getAccountType() != n4.getAccountType()){
+                    Double Origem = totalOrigem - Tax;
+                    n3.setSaldo(Origem);
+                } else{
+                    n3.setSaldo(totalOrigem);
+                }
+
                 n4.setSaldo(totalDestino);
                 bancoRepository.save(n3);
                 bancoRepository.save(n4);
@@ -116,25 +125,25 @@ public class BancoController implements ContaCorrente{
     @Override
     public Double sacar(Double quantidade, String name) {
         message.setLength(0);
-        ContaCorrentePF n5 = consultaConta(name);
-        Double saldoRestante = null;
-        if (n5 != null) {
-            saldoRestante = n5.getSaldo();
+        ContaCorrentePF conta = consultaConta(name);
 
-            if (n5.getSaldo() >= quantidade) {
-                Double total = n5.getSaldo() - quantidade;
-                n5.setSaldo(total);
-                bancoRepository.save(n5);
-                saldoRestante = total;
+        if (conta != null) {
+            if (quantidade > 0) {
+                if (conta.getSaldo() >= quantidade) {
+                    Double novoSaldo = conta.getSaldo() - quantidade;
+                    conta.setSaldo(novoSaldo);
+                    bancoRepository.save(conta);
+                    message.append("\nVocê sacou R$").append(quantidade).append(", seu saldo atual é R$").append(novoSaldo);
+                } else {
+                    message.append("\nSaldo insuficiente para o saque.");
+                }
             } else {
-                message.append("\nSaldo insuficiente para o saque.");
-                saldoRestante = n5.getSaldo(); // Saldo restante é igual ao saldo atual, pois não foi possível sacar o valor total desejado.
+                message.append("\nO valor do saque deve ser maior que zero.");
             }
         } else {
             message.append("\nConta não encontrada.");
         }
-        message.append("\nVocê sacou R$").append(quantidade).append(", muito obrigado por utilizar nossos serviços ");
-        return saldoRestante;
+        return null;
     }
 
     @Override
@@ -144,4 +153,17 @@ public class BancoController implements ContaCorrente{
         return n3.getSaldo();
     }
 
+    public void aplicarJurosPoupanca() {
+        List<ContaCorrentePF> contas = (List<ContaCorrentePF>) bancoRepository.findAll();
+
+        for (ContaCorrentePF cp : contas) {
+            if (cp.getAccountType() == AccountType.CONTA_POUPANCA) {
+                Double saldo = cp.getSaldo();
+                Double juro = saldo * 0.001; // 0.1% de juros
+                Double novoSaldo = saldo + juro;
+                cp.setSaldo(novoSaldo);
+                bancoRepository.save(cp);
+            }
+        }
+    }
 }
