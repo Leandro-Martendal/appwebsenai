@@ -6,7 +6,12 @@ import com.example.appwebsenai.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class BancoController implements ContaCorrente{
@@ -60,12 +65,23 @@ public class BancoController implements ContaCorrente{
         return contaCorrentePF;
     }
 
-    public ContaCorrentePF consultaConta(String name){
-
+    public ContaCorrentePF consultaConta(String name) {
         List<ContaCorrentePF> contas = (List<ContaCorrentePF>) bancoRepository.findAll();
 
-        for(ContaCorrentePF cc : contas){
-            if(cc.getPerson() != null && cc.getPerson().getName().equals(name)){
+        for (ContaCorrentePF cc : contas) {
+            if (cc.getPerson() != null && cc.getPerson().getName().equals(name)) {
+
+                LocalDate dataAtual = LocalDate.now();
+                LocalDate dataUltimaAtualizacao = cc.getDataAtualizacao().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                long diasPassados = ChronoUnit.DAYS.between(dataUltimaAtualizacao, dataAtual);
+
+                if (diasPassados >= 1 && cc.getAccountType() == AccountType.CONTA_POUPANCA) {
+                    cc.setDataAtualizacao(new Date());
+                    cc.setSaldo(cc.getSaldo() * Math.pow(1.001, diasPassados));
+                    bancoRepository.save(cc);
+                }
+
                 return cc;
             }
         }
@@ -153,7 +169,7 @@ public class BancoController implements ContaCorrente{
         return n3.getSaldo();
     }
 
-    public void aplicarJurosPoupanca() {
+    /*public void aplicarJurosPoupanca() {
         List<ContaCorrentePF> contas = (List<ContaCorrentePF>) bancoRepository.findAll();
 
         for (ContaCorrentePF cp : contas) {
@@ -165,5 +181,5 @@ public class BancoController implements ContaCorrente{
                 bancoRepository.save(cp);
             }
         }
-    }
+    }*/
 }

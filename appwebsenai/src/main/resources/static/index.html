@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Banco digital SESI SENAI</title>
+    <LINK rel="icon" type="icon/x-image" href="images/favicon.png">
+    <LINK rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<a href="index.html">Cadastro de pessoa</a>
+<a href="conta.html">Cadastre sua conta</a>
+<a href="contacc.html">Gerencia sua conta</a>
+<div>
+    <h1>Cadastro de pessoa</h1>
+
+        <form id="cadastroPessoa">
+            <br><label class="teste" for="id">ID: </label>
+            <input type="text" id="id" name="id" readonly><br>
+
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="name" required><br>
+
+            <label for="sexo">Sexo: (F/M)</label>
+            <input type="text" id="sexo" name="sexo" required><br><br>
+            <button type="submit" id="salvar">Salvar</button>
+            <button type="submit" id="excluir">Excluir</button>
+
+        </form>
+</div>
+-------------------------------------------------
+<br><br><br>
+
+<div>
+    <button type="button" id="listarPessoas">Listar Pessoas</button>
+    <table id="tabelaPessoas">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Sexo</th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- JS vai preencher-->
+
+        </tbody>
+    </table>
+</div>
+
+<script src="script.js">
+</script>
+
+</body>
+</html>

@@ -1,6 +1,8 @@
 package com.example.appwebsenai.model;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @Table(name = "conta")
@@ -10,8 +12,6 @@ public class ContaCorrentePF{
     @Column(name = "numero_conta")
     private Long numeroConta;
 
-    //private Person pessoa;
-
     private Double saldo;
 
     @OneToOne
@@ -19,6 +19,9 @@ public class ContaCorrentePF{
 
     @Column(name = "Type")
     private AccountType AccountType;
+
+    @Column(name= "criacao")
+    private Date dataAtualizacao;
 
     @Transient
     private String error;
@@ -56,14 +59,6 @@ public class ContaCorrentePF{
         this.numeroConta = numeroConta;
     }
 
-    /*public Person getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Person pessoa) {
-        this.pessoa = pessoa;
-    }*/
-
     public Double getSaldo() {
         return saldo;
     }
@@ -72,4 +67,11 @@ public class ContaCorrentePF{
         this.saldo = saldo;
     }
 
+    public Date getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(Date dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
 }
