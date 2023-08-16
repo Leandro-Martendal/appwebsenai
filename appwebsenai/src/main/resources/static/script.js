@@ -1,6 +1,7 @@
 const formPessoa= document.getElementById("cadastroPessoa");
 const tabelaPessoa= document.getElementById("tabelaPessoas").getElementsByTagName('tbody')[0];
 const btnAll= document.getElementById("listarPessoas");
+const btnDelete = document.getElementById("excluir");
 
 formPessoa.addEventListener("submit", function (event){
    event.preventDefault();
@@ -13,6 +14,12 @@ formPessoa.addEventListener("submit", function (event){
        .then(data => {
           document.getElementById("id").value = data.id;
        })
+});
+
+btnDelete.addEventListener("click", function (){
+    fetch("/person?name=" + document.getElementById("nome").value, {
+        method: "Delete"
+    }).then(response => response.json())
 });
 
 btnAll.addEventListener("click", function (){
