@@ -1,5 +1,7 @@
 package com.example.appwebsenai.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +16,8 @@ public class ContaCorrentePF{
 
     private Double saldo;
 
-    @OneToOne
+    @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "person_id")
     private Person person;
 

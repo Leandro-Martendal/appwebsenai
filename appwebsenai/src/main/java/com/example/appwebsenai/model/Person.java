@@ -1,5 +1,7 @@
 package com.example.appwebsenai.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,6 +18,7 @@ public class Person {
     private String sexo;
 
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    @JsonBackReference
     private ContaCorrentePF contaCorrentePF;
 
     public ContaCorrentePF getContaCorrentePF() {

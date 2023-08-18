@@ -86,8 +86,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function Saque(id, saque) {
         fetch("/sacarconta", {
-        method: "Put"
-    })
+            method: "Put"
+        })
 
     }
 
@@ -100,8 +100,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function Transferir(idOrigem, idDestino, quantidade) {
         fetch("/transferirconta", {
-        method: "Put"
-    })
+            method: "Put"
+        })
 
     }
 
