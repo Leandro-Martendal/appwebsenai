@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (){
     let comboPessoa = document.getElementById("pessoa");
-    function preencherPessao(){
+    function preencherPessoa(){
         fetch("/all")
             .then(response => response.json())
             .then(data => {
@@ -17,5 +17,5 @@ document.addEventListener("DOMContentLoaded", function (){
 
             })
     }
-    preencherPessao();
+    preencherPessoa();
 });

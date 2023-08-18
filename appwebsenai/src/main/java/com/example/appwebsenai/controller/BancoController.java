@@ -53,6 +53,7 @@ public class BancoController implements ContaCorrente{
             number++;
             contaCorrentePF.setNumeroConta(number);
             contaCorrentePF.setPerson(person);
+            contaCorrentePF.setDataAtualizacao(new Date());
             bancoRepository.save(contaCorrentePF);
         }else if(contaCorrentePF.getError() == null){
             message.append("\nPessoa ");
