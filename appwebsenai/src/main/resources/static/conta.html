@@ -9,23 +9,32 @@
 <body>
 <a href="index.html">Cadastro de pessoa</a>
 <a href="conta.html">Cadastre sua conta</a>
-<a href="index.html">Gerencia sua conta</a>
+<a href="gerenciar.html">Gerencia sua conta</a>
+<a href="contatos.html">Contatos</a>
 <div>
   <h1>Cadastro de conta</h1>
+    <label for="numero_conta"> Número conta</label>
+    <br><input id = "numero_conta" type = "text" readonly><br>
+    <label for="saldo">Saldo</label>
+    <br><input id = "saldo" type = "text" readonly><br>
 
-  <form id="cadastroConta">
-    <br><label for="nome">Nome:</label>
-    <input type="text" id="nome" required><br>
+      <br><label for="tipo_conta">Selecione o tipo da sua conta</label>
+      <br><select id = "tipo_conta">
+            <option value="corrente"> Conta corrente</option>
+            <option value="poupanca"> Conta poupança</option>
+          </select>
 
-    <label for="type">Tipo da conta: (POUPANCA/CORRENTE)</label>
-    <input type="text" id="type" required><br><br>
+      <br><br><label for="pessoa">Escolha seu nome</label>
+      <br><select id = "pessoa">
+          </select>
 
-    <button type="submit">Salvar</button>
+      <br><br>
+      <button type="button">Cadastrar conta</button>
 
-  </form>
+
 </div>
 
-<script src="script.js">
+<script src="conta.js">
 </script>
 
 </body>

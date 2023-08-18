@@ -15,6 +15,7 @@ public class ContaCorrentePF{
     private Double saldo;
 
     @OneToOne
+    @JoinColumn(name = "person_id")
     private Person person;
 
     @Column(name = "Type")
