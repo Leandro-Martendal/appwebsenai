@@ -85,32 +85,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     preencherPessoa3();
 
-    function Saque(contaDestino, quantidade) {
+    function Saque(contaDestino, sacar) {
         let parametros = new URLSearchParams();
         parametros.set('contaDestino', contaDestino)
-        parametros.set('quantidade', quantidade)
+        parametros.set('sacar', sacar)
         fetch("/sacarconta?" + parametros.toString(), {
             method: "Put"
         })
             .then(response => response.json())
             .then(data =>{
                 document.getElementById("pessoa1").textContent = data.contaDestino;
-                document.getElementById("deposito").textContent = data.quantidade;
+                document.getElementById("sacar").textContent = data.sacar;
             })
 
     }
 
-    function Deposito(contaDestino, quantidade) {
+    function Deposito(contaDestino, deposito) {
         let parametros = new URLSearchParams();
         parametros.set('contaDestino', contaDestino)
-        parametros.set('quantidade', quantidade)
+        parametros.set('deposito', deposito)
         fetch("/depositarconta?" + parametros.toString(), {
             method: "Put"
         })
             .then(response => response.json())
             .then(data =>{
                 document.getElementById("pessoa").textContent = data.contaDestino;
-                document.getElementById("deposito").textContent = data.quantidade;
+                document.getElementById("deposito").textContent = data.deposito;
             })
 
     }
@@ -132,15 +132,15 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     btnSaque.addEventListener("click", function () {
-        let contaDestino = comboPessoa.value;
-        let quantidade = parseFloat(document.getElementById("quantidade").value);
-        Saque(contaDestino, quantidade);
+        let contaDestino = comboPessoa1.value;
+        let sacar = parseFloat(document.getElementById("sacar").value);
+        Saque(contaDestino, sacar);
     });
 
     btnDeposito.addEventListener("click", function () {
         let contaDestino = comboPessoa.value;
-        let quantidade = parseFloat(document.getElementById("quantidade").value);
-        Deposito(contaDestino, quantidade);
+        let deposito = parseFloat(document.getElementById("deposito").value);
+        Deposito(contaDestino, deposito);
     });
 
     btnTransferir.addEventListener("click", function () {

@@ -22,16 +22,16 @@ public class BancoView {
         return bancoController.criarConta(name, type);
     }
     @GetMapping("/consultarconta")
-    public ContaCorrentePF consultaConta(@PathParam("name") String name){
-        return bancoController.consultaConta(name);
+    public ContaCorrentePF consultaConta(@PathParam("contaDestino") Long contaDestino){
+        return bancoController.consultaConta(contaDestino);
     }
     @PutMapping("/depositarconta")
-    public String depositar (@PathParam("name") String name, @PathParam("quantidade") Double quantidade){
-       return bancoController.depositar(quantidade, name);
+    public String depositar (@PathParam("contaDestino") Long contaDestino, @PathParam("deposito") Double deposito){
+       return bancoController.depositar(deposito, contaDestino);
     }
     @PutMapping("/sacarconta")
-    public Double sacar (@PathParam("name") String name, @PathParam("quantidade") Double quantidade){
-        return bancoController.sacar(quantidade, name);
+    public Double sacar (@PathParam("contaDestino") Long contaDestino, @PathParam("sacar") Double sacar){
+        return bancoController.sacar(sacar, contaDestino);
     }
     @PutMapping("/transferirconta")
     public String transferir (@PathParam("contaOrigem") Long contaOrigem , @PathParam("contaDestino") Long contaDestino, @PathParam("quantidade") Double quantidade){

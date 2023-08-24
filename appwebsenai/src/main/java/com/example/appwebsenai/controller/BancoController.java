@@ -66,11 +66,11 @@ public class BancoController implements ContaCorrente{
         return contaCorrentePF;
     }
 
-    public ContaCorrentePF consultaConta(String name) {
+    public ContaCorrentePF consultaConta(Long contaDestino) {
         List<ContaCorrentePF> contas = (List<ContaCorrentePF>) bancoRepository.findAll();
 
         for (ContaCorrentePF cc : contas) {
-            if (cc.getPerson() != null && cc.getPerson().getName().equals(name)) {
+            if (cc.getPerson() != null && cc.getPerson().getId().equals(contaDestino.intValue())) {
 
                 LocalDate dataAtual = LocalDate.now();
                 LocalDate dataUltimaAtualizacao = cc.getDataAtualizacao().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -89,19 +89,19 @@ public class BancoController implements ContaCorrente{
         return null;
     }
 
-    public String depositar(Double quantidade, String name) {
+    public String depositar(Double deposito, Long contaDestino) {
         message.setLength(0);
-        consultaConta(name);
-        ContaCorrentePF n2 = consultaConta(name);
+        consultaConta(contaDestino);
+        ContaCorrentePF n2 = consultaConta(contaDestino);
         if(n2.getSaldo() != null) {
-            Double total = n2.getSaldo() + quantidade;
+            Double total = n2.getSaldo() + deposito;
             n2.setSaldo(total);
-            message.append("\nVocê depositou R$").append(quantidade).append(", em sua conta");
+            message.append("\nVocê depositou R$").append(deposito).append(", em sua conta");
             message.append("\nVocê possui R$").append(total).append(", em sua conta");
             } else{
-            n2.setSaldo(quantidade);
-            Double total = quantidade;
-            message.append("\nVocê depositou R$").append(quantidade).append(", em sua conta");
+            n2.setSaldo(deposito);
+            Double total = deposito;
+            message.append("\nVocê depositou R$").append(deposito).append(", em sua conta");
             message.append("\nVocê possui R$").append(total).append(", em sua conta");
             }
         bancoRepository.save(n2);
@@ -140,17 +140,17 @@ public class BancoController implements ContaCorrente{
     }
 
     @Override
-    public Double sacar(Double quantidade, String name) {
+    public Double sacar(Double sacar, Long contaDestino) {
         message.setLength(0);
-        ContaCorrentePF conta = consultaConta(name);
+        ContaCorrentePF conta = consultaConta(contaDestino);
 
         if (conta != null) {
-            if (quantidade > 0) {
-                if (conta.getSaldo() >= quantidade) {
-                    Double novoSaldo = conta.getSaldo() - quantidade;
+            if (sacar > 0) {
+                if (conta.getSaldo() >= sacar) {
+                    Double novoSaldo = conta.getSaldo() - sacar;
                     conta.setSaldo(novoSaldo);
                     bancoRepository.save(conta);
-                    message.append("\nVocê sacou R$").append(quantidade).append(", seu saldo atual é R$").append(novoSaldo);
+                    message.append("\nVocê sacou R$").append(sacar).append(", seu saldo atual é R$").append(novoSaldo);
                 } else {
                     message.append("\nSaldo insuficiente para o saque.");
                 }

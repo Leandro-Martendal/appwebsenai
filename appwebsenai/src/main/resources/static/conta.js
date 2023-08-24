@@ -19,3 +19,15 @@ document.addEventListener("DOMContentLoaded", function (){
     }
     preencherPessoa();
 });
+btnConta.addEventListener("click", function (event){
+    event.preventDefault();
+    let formDados = new FormData(formPessoa);
+    let parametros = new URLSearchParams(formDados);
+
+    fetch("/criarconta?" + parametros.toString(), {
+        method: "Post"
+    }).then(response => response.json())
+        .then(data => {
+            document.getElementById("numero_conta").value = data.numero_conta;
+        })
+});
