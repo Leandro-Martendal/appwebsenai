@@ -4,16 +4,16 @@ const btnAll= document.getElementById("listarPessoas");
 const btnDelete = document.getElementById("excluir");
 
 formPessoa.addEventListener("submit", function (event){
-   event.preventDefault();
-   let formDados = new FormData(formPessoa);
-   let parametros = new URLSearchParams(formDados);
+    event.preventDefault();
+    let formDados = new FormData(formPessoa);
+    let parametros = new URLSearchParams(formDados);
 
-   fetch("/person?" + parametros.toString(), {
-      method: "Post"
-   }).then(response => response.json())
-       .then(data => {
-          document.getElementById("id").value = data.id;
-       })
+    fetch("/person?" + parametros.toString(), {
+        method: "Post"
+    }).then(response => response.json())
+        .then(data => {
+            document.getElementById("id").value = data.id;
+        })
 });
 
 btnDelete.addEventListener("click", function (){
@@ -23,16 +23,16 @@ btnDelete.addEventListener("click", function (){
 });
 
 btnAll.addEventListener("click", function (){
-   fetch("/all")
-       .then(response => response.json())
-       .then(data => {
-          tabelaPessoa.innerHTML = "";
-          data.forEach(pessoa => {
-            let row = tabelaPessoa.insertRow();
-            row.insertCell(0).textContent = pessoa.id;
-            row.insertCell(1).textContent = pessoa.name;
-            row.insertCell(2).textContent = pessoa.sexo;
+    fetch("/all")
+        .then(response => response.json())
+        .then(data => {
+            tabelaPessoa.innerHTML = "";
+            data.forEach(pessoa => {
+                let row = tabelaPessoa.insertRow();
+                row.insertCell(0).textContent = pessoa.id;
+                row.insertCell(1).textContent = pessoa.name;
+                row.insertCell(2).textContent = pessoa.sexo;
 
-          })
-       })
+            })
+        })
 });

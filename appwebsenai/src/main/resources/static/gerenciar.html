@@ -11,45 +11,43 @@
 <a href="conta.html">Cadastre sua conta</a>
 <a href="gerenciar.html">Gerencie sua conta</a>
 <a href="contatos.html">Contatos</a>
-<div>
 
-  <h1>Seja bem vindo!</h1>
+<h1>Seja bem vindo!</h1>
 
-  <label>Selecione a opção desejada</label><br><br>
+<label>Selecione a opção desejada</label><br><br>
 
-  <label for="deposito">Depositar:</label><br>
-  <label for="pessoa">Selecione a conta em que ocorrerá o depósito</label><br>
-  <select id = "pessoa"></select><br><br>
+<label for="deposito">Depositar:</label><br>
+<label for="pessoa">Selecione a conta em que ocorrerá o depósito</label><br>
+<select id = "pessoa"></select><br><br>
 
-  <label for="deposito">Valor R$</label><br>
-  <input id="deposito" type = text required><br><br>
-  <button type="button">Depositar agora</button><br><br><br>
-
-
-  <label for="saque">Sacar:</label><br>
-  <label for="pessoa1">Selecione a conta em que ocorrerá o saque</label><br>
-  <select id = "pessoa1"></select><br><br>
-
-  <label for="saque">Valor R$</label><br>
-  <input id="saque" type = text required><br><br>
-  <button type="button">Sacar agora</button><br><br><br>
+<label for="deposito">Valor R$</label><br>
+<input id="deposito" type = text required><br><br>
+<button type="button" id="btnDeposito">Depositar agora</button><br><br><br>
 
 
-  <label for="quantidade">Transferir:</label><br>
-  <label for="pessoa2">Selecione a pessoa de origem</label><br>
-  <select id = "pessoa2"></select><br><br>
+<label for="saque">Sacar:</label><br>
+<label for="pessoa1">Selecione a conta em que ocorrerá o saque</label><br>
+<select id = "pessoa1"></select><br><br>
 
-  <label for="pessoa3">Selecione a pessoa de destino</label><br>
-  <select id="pessoa3"></select><br><br>
+<label for="saque">Valor R$</label><br>
+<input id="saque" type = text required><br><br>
+<button type="button" id="btnSaque">Sacar agora</button><br><br><br>
 
-  <label for="quantidade">Valor R$</label><br>
-  <input id="quantidade" type = text required><br><br>
-  <button type="button">Transferir</button>
 
+<label for="quantidade">Transferir:</label><br>
+<label for="pessoa2">Selecione a pessoa de destino</label><br>
+<select id = "pessoa2"></select><br><br>
+
+<label for="pessoa3">Selecione a pessoa de origem</label><br>
+<select id="pessoa3"></select><br><br>
+
+<label for="quantidade">Valor R$</label><br>
+<input id="quantidade" type = text required><br><br>
+<button type="button" id="btnTransferir">Transferir</button>
 
 
 
-</div>
+
 
 <script src="gerenciar.js">
 </script>

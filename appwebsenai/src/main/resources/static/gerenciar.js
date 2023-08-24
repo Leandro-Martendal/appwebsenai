@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+
     let comboPessoa = document.getElementById("pessoa");
     let comboPessoa1 = document.getElementById("pessoa1");
     let comboPessoa2 = document.getElementById("pessoa2");
@@ -6,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let btnSaque = document.getElementById("btnSaque");
     let btnDeposito = document.getElementById("btnDeposito");
-    let btnTransferir = document.getElementById("btnTransferencia");
+    let btnTransferir = document.getElementById("btnTransferir");
 
     function preencherPessoa() {
         fetch("/all")
@@ -84,43 +85,68 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     preencherPessoa3();
 
-    function Saque(id, saque) {
-        fetch("/sacarconta", {
+    function Saque(contaDestino, quantidade) {
+        let parametros = new URLSearchParams();
+        parametros.set('contaDestino', contaDestino)
+        parametros.set('quantidade', quantidade)
+        fetch("/sacarconta?" + parametros.toString(), {
             method: "Put"
         })
+            .then(response => response.json())
+            .then(data =>{
+                document.getElementById("pessoa1").textContent = data.contaDestino;
+                document.getElementById("deposito").textContent = data.quantidade;
+            })
 
     }
 
-    function Deposito(id, deposito) {
-        fetch("/depositarconta", {
+    function Deposito(contaDestino, quantidade) {
+        let parametros = new URLSearchParams();
+        parametros.set('contaDestino', contaDestino)
+        parametros.set('quantidade', quantidade)
+        fetch("/depositarconta?" + parametros.toString(), {
             method: "Put"
         })
+            .then(response => response.json())
+            .then(data =>{
+                document.getElementById("pessoa").textContent = data.contaDestino;
+                document.getElementById("deposito").textContent = data.quantidade;
+            })
 
     }
 
-    function Transferir(idOrigem, idDestino, quantidade) {
-        fetch("/transferirconta", {
+    function Transferir(contaOrigem, contaDestino, quantidade) {
+        let parametros = new URLSearchParams();
+        parametros.set('contaOrigem', contaOrigem)
+        parametros.set('contaDestino', contaDestino)
+        parametros.set('quantidade', quantidade)
+        fetch("/transferirconta?" + parametros.toString(), {
             method: "Put"
         })
-
-    }
+            .then(response => response.json())
+            .then (data => {
+                document.getElementById("pessoa2").textContent = data.contaOrigem;
+                document.getElementById("pessoa3").textContent = data.contaDestino;
+                document.getElementById("quantidade").textContent = data.quantidade;
+            })
+    };
 
     btnSaque.addEventListener("click", function () {
-        let selectedId = comboPessoa.value;
-        let valor = parseFloat(document.getElementById("valor").value);
-        Saque(selectedId, saque);
+        let contaDestino = comboPessoa.value;
+        let quantidade = parseFloat(document.getElementById("quantidade").value);
+        Saque(contaDestino, quantidade);
     });
 
     btnDeposito.addEventListener("click", function () {
-        let selectedId = comboPessoa.value;
-        let valor = parseFloat(document.getElementById("valor").value);
-        Deposito(selectedId, deposito);
+        let contaDestino = comboPessoa.value;
+        let quantidade = parseFloat(document.getElementById("quantidade").value);
+        Deposito(contaDestino, quantidade);
     });
 
     btnTransferir.addEventListener("click", function () {
-        let selectedIdOrigem = comboPessoa2.value;
-        let selectedIdDestino = comboPessoa3.value;
-        let valor = parseFloat(document.getElementById("valor").value);
-        Transferir(selectedIdOrigem, selectedIdDestino, quantidade);
+        let contaOrigem = comboPessoa2.value;
+        let contaDestino = comboPessoa3.value;
+        let quantidade = parseFloat(document.getElementById("quantidade").value);
+        Transferir(contaOrigem, contaDestino, quantidade);
     });
 });
