@@ -30,36 +30,48 @@ public class BancoController implements ContaCorrente{
         return null;
     }
 
-    public ContaCorrentePF criarConta(String name, String type) throws Exception {
+    public ContaCorrentePF criarConta(Integer personId, String type) throws Exception {
         message.setLength(0);
         ContaCorrentePF contaCorrentePF = new ContaCorrentePF();
-        if(type == null){
+
+        if (type == null) {
             message.append("\nNecessário informar o tipo da conta!");
-        }
-        switch (type){
-            case "POUPANCA" :
-                contaCorrentePF.setAccountType(AccountType.CONTA_POUPANCA);
-                break;
-            case "CORRENTE" :
-                contaCorrentePF.setAccountType(AccountType.CONTA_CORRENTE);
-                break;
-            default:
-                message.append("\nTipo da conta não é suportado!");
-                break;
+        } else {
+            switch (type) {
+                case "POUPANCA":
+                    contaCorrentePF.setAccountType(AccountType.CONTA_POUPANCA);
+                    break;
+                case "CORRENTE":
+                    contaCorrentePF.setAccountType(AccountType.CONTA_CORRENTE);
+                    break;
+                default:
+                    message.append("\nTipo da conta não é suportado!");
+                    break;
+            }
         }
 
-        Person person = controller.findPerson(name);
-        if(person != null && contaCorrentePF.getError() == null){
-            number++;
-            contaCorrentePF.setNumeroConta(number);
+        Person person = controller.findPerson(personId);
+
+        if (person != null && contaCorrentePF.getError() == null) {
             contaCorrentePF.setPerson(person);
             contaCorrentePF.setDataAtualizacao(new Date());
+
+            List<ContaCorrentePF> lastAccount = bancoRepository.findTopByOrderByIdDesc();
+            if (!lastAccount.isEmpty()) {
+                ContaCorrentePF mostRecentAccount = lastAccount.get(0);
+                int lastId = mostRecentAccount.getNumeroConta().intValue();
+                int newId = lastId + 1;
+                contaCorrentePF.setNumeroConta(Long.valueOf(newId));
+            } else {
+                contaCorrentePF.setNumeroConta(Long.valueOf(1));
+            }
+
             bancoRepository.save(contaCorrentePF);
-        }else if(contaCorrentePF.getError() == null){
-            message.append("\nPessoa ");
-            message.append(name).append(" informada não foi cadastrada");
+        } else if (contaCorrentePF.getError() == null) {
+            message.append("\nPessoa com ID ").append(personId).append(" informada não foi cadastrada");
         }
-        if(!message.isEmpty()){
+
+        if (!message.isEmpty()) {
             contaCorrentePF.setError(message.toString());
         }
 

@@ -18,8 +18,8 @@ public class BancoView {
     private BancoController bancoController;
 
     @PostMapping("/criarconta")
-    public ContaCorrentePF criarConta(@PathParam("name") String name, @PathParam("type") String type) throws Exception {
-        return bancoController.criarConta(name, type);
+    public ContaCorrentePF criarConta(@PathParam("personId") Integer personId, @PathParam("type") String type) throws Exception {
+        return bancoController.criarConta(personId, type);
     }
     @GetMapping("/consultarconta")
     public ContaCorrentePF consultaConta(@PathParam("contaDestino") Long contaDestino){

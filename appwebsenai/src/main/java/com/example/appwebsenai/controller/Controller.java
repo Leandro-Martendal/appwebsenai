@@ -15,10 +15,11 @@ public class Controller {
     private List<Person> persons = new ArrayList<>();
     private int id = 0;
 
-    public Person findPerson(String name){
+    public Person findPerson(Integer id) {
         List<Person> persons = (List<Person>) personRepository.findAll();
-        for(Person person : persons){
-            if(person.getName().equals(name)){
+
+        for (Person person : persons) {
+            if (person.getId().equals(id)) {
                 return person;
             }
         }
@@ -36,13 +37,13 @@ public class Controller {
         return person;
     }
 
-    public void removePerson(String name){
-        Person person = findPerson(name);
+    public void removePerson(Integer personId){
+        Person person = findPerson(personId);
         personRepository.delete(person);
     }
 
-    public Person editPerson(String name, String sexo){
-        Person person = findPerson(name);
+    public Person editPerson(Integer personId, String sexo){
+        Person person = findPerson(personId);
         person.setSexo(sexo);
         personRepository.save(person);
         return person;

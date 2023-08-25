@@ -15,16 +15,16 @@ public class PersonView {
     @Autowired
     Controller controller;
     @GetMapping("/person")
-    public Person findPerson(@PathParam("name") String name){
-        return controller.findPerson(name);
+    public Person findPerson(@PathParam("personId") Integer personId){
+        return controller.findPerson(personId);
     }
 
 
     @DeleteMapping("/person")
-    public String deletePerson(@PathParam("name") String name){
-        controller.removePerson(name);
+    public String deletePerson(@PathParam("personId") Integer personId){
+        controller.removePerson(personId);
 
-        return "Pessoa com o nome de " + name + " foi deletada";
+        return "Pessoa com o ID " + personId + " foi deletada";
     }
 
     @PostMapping("/person")
@@ -33,8 +33,8 @@ public class PersonView {
     }
 
     @PutMapping("/person")
-    public Person updatePerson(@PathParam("name") String name, @PathParam("sexo") String sexo){
-        return controller.editPerson(name, sexo);
+    public Person updatePerson(@PathParam("personId") Integer personId, @PathParam("sexo") String sexo){
+        return controller.editPerson(personId, sexo);
     }
 
     @GetMapping("/all")
