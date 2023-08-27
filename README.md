@@ -1,7 +1,6 @@
 # App web Senai - Banco Digital
 
-## App básico para simular os conhecimentos adquiridos durante o curso de Analise e Desenvolvimento
-## de sistemas do Senai/SC, modalidade EAD
+## App básico para simular os conhecimentos adquiridos durante o curso de Analise e Desenvolvimento de sistemas do Senai/SC, modalidade EAD
 
 #como-usar: Aplicativo dividido na modalidade MVC (Model-View-Controller).
 #no pacote Controller, temos o repositório do banco e o repositório das pessoas(clientes)
